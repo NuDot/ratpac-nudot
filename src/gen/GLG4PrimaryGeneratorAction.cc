@@ -16,7 +16,8 @@
 #include "G4PrimaryVertex.hh"
 #include "G4Track.hh"
 #include "G4ios.hh"
-#include "CLHEP/Units/SystemOfUnits.h"
+#include <CLHEP/Units/SystemOfUnits.h>
+#include <CLHEP/Units/PhysicalConstants.h>
 #include "Randomize.hh"
 
 #include "GLG4Gen.hh"
@@ -24,6 +25,7 @@
 #include "GLG4VertexGen.hh"            // for vertex generator
 #include "GLG4PosGen.hh"               // for global position generator
 #include <RAT/Factory.hh>
+#include <RAT/PosGen_RegexFill.hh>
 #include <RAT/PosGen_Line.hh>
 #include <RAT/PosGen_FillShell.hh>
 #include <RAT/PosGen_Radial.hh>
@@ -62,7 +64,7 @@ GLG4PrimaryGeneratorAction()
   myUniversalTime= 0.0;
   myUniversalTimeSincePriorEvent= 0.0;
   
-  myEventWindow= 0*ns;
+  myEventWindow= 0*CLHEP::ns;
 
   // load up factories with known generators
 
@@ -122,6 +124,9 @@ GLG4PrimaryGeneratorAction()
   RAT::GlobalFactory<GLG4PosGen>::Register("fill", 
 					   new RAT::Alloc<GLG4PosGen, 
 					   GLG4PosGen_Fill>);
+  RAT::GlobalFactory<GLG4PosGen>::Register("regexfill", 
+					   new RAT::Alloc<GLG4PosGen, 
+					   RAT::PosGen_RegexFill>);
   RAT::GlobalFactory<GLG4PosGen>::Register("multipoint", 
 					   new RAT::Alloc<GLG4PosGen, 
 					   RAT::PosGen_Multipoint>);
